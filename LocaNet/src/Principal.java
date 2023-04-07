@@ -22,6 +22,14 @@ public class Principal {
             "Bahia", 
             "Alagoinhas");
 
+        Imovel aptoCidade = new Imovel(
+            "000000123499",
+            "Rua 13 de Maio",
+            "0001",
+            "01234-775" , 
+            "apto", 
+            "praia");
+
         System.out.println(
             "O senhor(a) " + propAptoCampo.getNome() +
             " é proprietário(a) do imóvel de IPTU: " + aptoCampo.getNumIPTU() + "\n"
@@ -34,7 +42,43 @@ public class Principal {
             "Número: " + aptoCampo.getNumero() + "\n" +
             "CEP: " + aptoCampo.getCep() + "\n" +
             "Estado: " + aptoCampo.getEstado() + "\n" +
-            "Cidade: " + aptoCampo.getCidade() + "\n"
+            "Cidade: " + aptoCampo.getCidade() + "\n\n"
+        );
+
+        System.out.println(
+            "O senhor(a) " + propAptoCampo.getNome() +
+            " deseja alugar o imóvel de IPTU: " + aptoCidade.getNumIPTU() + "\n"
+            );
+
+        System.out.println(
+            "O imóvel de IPTU: " + aptoCidade.getNumIPTU() +
+            " fica localizado no seguinte endereço:\n\n" +
+            "Logradouro: " + aptoCidade.getRua() + "\n" +
+            "Número: " + aptoCidade.getNumero() + "\n" +
+            "CEP: " + aptoCidade.getCep() + "\n" +
+            "Estado: " + aptoCidade.getEstado() + "\n" +
+            "Cidade: " + aptoCidade.getCidade() + "\n\n"
+        );
+
+        System.out.println(
+            "O senhor(a) " + propAptoCampo.getNome() +
+            " alugou o imóvel de IPTU: " + aptoCidade.getNumIPTU() + "\n" +
+            "Seu novo Endereço é: \n"
+        );
+
+        propAptoCampo.atualizaEndereco(
+            "Rua 13 de Maio",
+            "0001",
+            "01234-775",
+            "Bahia",
+            "Salvador");
+
+        System.out.println(
+            "Logradouro: " + propAptoCampo.getRua() + "\n" +
+            "Número: " + propAptoCampo.getNumero() + "\n" +
+            "CEP: " + propAptoCampo.getCep() + "\n" +
+            "Estado: " + propAptoCampo.getEstado() + "\n" +
+            "Cidade: " + propAptoCampo.getCidade() + "\n\n"
         );
     }
 }

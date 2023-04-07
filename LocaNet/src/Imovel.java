@@ -29,6 +29,25 @@ public class Imovel {
         this.utilizacao = utilizacao;
     }
 
+    public Imovel(
+        String numIPTU,
+        String rua,
+        String numero,
+        String cep,
+        String tipo, 
+        String utilizacao
+    ){
+        this(
+            numIPTU,
+            rua,
+            numero,
+            cep,
+            "Bahia",
+            "Salvador",
+            tipo,  
+            utilizacao);
+    }
+
     public String getNumIPTU() {
         return this.numIPTU;
     }
