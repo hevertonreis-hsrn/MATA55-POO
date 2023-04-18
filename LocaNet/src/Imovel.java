@@ -44,4 +44,13 @@ public class Imovel {
         return endereco.toString();
     }
 
+    @Override
+    public String toString() {
+
+        return "============ Dados do Imóvel ===========\n\n" +
+                "IPTU: " + this.getNumIPTU() + "\n" +
+                "Tipo: " + this.getTipo() + "\n" +
+                "Utilização: " + this.getUtilizacao() + "\n\n" +
+                this.endereco.toString() + "\n";
+    }
 }
