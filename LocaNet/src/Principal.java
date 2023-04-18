@@ -7,7 +7,7 @@ public class Principal {
         Imovel aptoCidade;
 
         String estado = "";
-        String uf = "JC";
+        String uf = "BA";
         Boolean estadoValido = false;
 
         for (Estados estados : Estados.values()) {

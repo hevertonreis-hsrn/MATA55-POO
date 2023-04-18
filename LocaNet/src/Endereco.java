@@ -20,20 +20,40 @@ public class Endereco {
         return this.rua;
     }
 
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
     public String getNumero() {
         return this.numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public String getCep() {
         return this.cep;
     }
 
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
     public String getEstado() {
         return this.estado;
     }
 
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String getCidade() {
         return this.cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public void atualizaEndereco(String rua,String numero,String cep,String estado,String cidade){
