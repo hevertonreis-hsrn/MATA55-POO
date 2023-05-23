@@ -11,6 +11,6 @@ public class Agenda {
     public Agenda() {
         this.datasDisponivel = new ArrayList<>();
         this.datasAlugado = new ArrayList<>();
-        this.datasDisponivel = new ArrayList<>();
+        this.datasBloqueado = new ArrayList<>();
     }
 }
