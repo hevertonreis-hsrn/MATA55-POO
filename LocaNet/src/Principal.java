@@ -1,28 +1,59 @@
 public class Principal {
     
     public static void main(String[] args) {
+
+        Imovel imovel1, imovel2, imovel3;
+        Proprietario prop1;
+
+        String estado = "";
+        String uf = "BA";
+        Boolean estadoValido = false;
+
+        for (Estados estados : Estados.values()) {
+            if(uf == estados.getUF()){
+                estadoValido = true;
+                estado = estados.getUF();
+            }
+        }
         
-        Imovel aptoCampo = new Imovel(
+        if(estadoValido == true){
+            imovel1 = new Imovel(
             "000000123456",
             "Rua Augusta Brasil",
             "123A",
             "01234-567" , 
-            "Bahia", 
+            estado, 
             "Alagoinhas", 
             "apto", 
             "campo");
 
-        Proprietario propAptoCampo = new Proprietario(
+            imovel2 = new Imovel(
+            "000000456880",
+            "Rua Felipa Caxias",
+            "0001C",
+            "55231-773" , 
+            estado, 
+            "Barreiras", 
+            "casa", 
+            "campo");
+
+            prop1 = new Proprietario(
             "Urias Manoel de Souza", 
             "012.345.678-90", 
             "0123456789 SSP-BA", 
             "Rua Augusta Brasil",
             "123A",
             "01234-567" , 
-            "Bahia", 
+            estado, 
             "Alagoinhas");
 
-        Imovel aptoCidade = new Imovel(
+            prop1.adicionarImovel(imovel1);
+            prop1.adicionarImovel(imovel2);
+
+            System.out.println("Listando imóveis do tipo 'apto'\n");
+            prop1.listarImovelPorTipo("apto");
+
+            imovel3 = new Imovel(
             "000000123499",
             "Rua 13 de Maio",
             "0001",
@@ -30,55 +61,24 @@ public class Principal {
             "apto", 
             "praia");
 
-        System.out.println(
-            "O senhor(a) " + propAptoCampo.getNome() +
-            " é proprietário(a) do imóvel de IPTU: " + aptoCampo.getNumIPTU() + "\n"
-            );
+            prop1.adicionarImovel(imovel3);
 
-        System.out.println(
-            "O imóvel de IPTU: " + aptoCampo.getNumIPTU() +
-            " fica localizado no seguinte endereço:\n\n" +
-            "Logradouro: " + aptoCampo.getRua() + "\n" +
-            "Número: " + aptoCampo.getNumero() + "\n" +
-            "CEP: " + aptoCampo.getCep() + "\n" +
-            "Estado: " + aptoCampo.getEstado() + "\n" +
-            "Cidade: " + aptoCampo.getCidade() + "\n\n"
-        );
+            prop1.atualizaEndereco(
+                "Rua 13 de Maio",
+                "0001",
+                "01234-775",
+                Estados.BA.getUF(),
+                "Salvador");
 
-        System.out.println(
-            "O senhor(a) " + propAptoCampo.getNome() +
-            " deseja alugar o imóvel de IPTU: " + aptoCidade.getNumIPTU() + "\n"
-            );
+            System.out.println("Listando imóveis do tipo 'apto'\n"); 
+            prop1.listarImovelPorTipo("apto");
 
-        System.out.println(
-            "O imóvel de IPTU: " + aptoCidade.getNumIPTU() +
-            " fica localizado no seguinte endereço:\n\n" +
-            "Logradouro: " + aptoCidade.getRua() + "\n" +
-            "Número: " + aptoCidade.getNumero() + "\n" +
-            "CEP: " + aptoCidade.getCep() + "\n" +
-            "Estado: " + aptoCidade.getEstado() + "\n" +
-            "Cidade: " + aptoCidade.getCidade() + "\n\n"
-        );
+            System.out.println("Listando imóveis do tipo 'casa'\n"); 
+            prop1.listarImovelPorTipo("casa");
 
-        System.out.println(
-            "O senhor(a) " + propAptoCampo.getNome() +
-            " alugou o imóvel de IPTU: " + aptoCidade.getNumIPTU() + "\n" +
-            "Seu novo Endereço é: \n"
-        );
+        } else {
+            System.out.println("A UF informada é inválida!!!");
+        }
 
-        propAptoCampo.atualizaEndereco(
-            "Rua 13 de Maio",
-            "0001",
-            "01234-775",
-            "Bahia",
-            "Salvador");
-
-        System.out.println(
-            "Logradouro: " + propAptoCampo.getRua() + "\n" +
-            "Número: " + propAptoCampo.getNumero() + "\n" +
-            "CEP: " + propAptoCampo.getCep() + "\n" +
-            "Estado: " + propAptoCampo.getEstado() + "\n" +
-            "Cidade: " + propAptoCampo.getCidade() + "\n\n"
-        );
     }
 }

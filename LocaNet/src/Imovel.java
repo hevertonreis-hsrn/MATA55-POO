@@ -1,51 +1,19 @@
 public class Imovel {
     
     private String numIPTU;
-    private String rua;
-    private String numero;
-    private String cep;
-    private String estado;
-    private String cidade;
+    private Endereco endereco;
     private String tipo; // casa, apto
     private String utilizacao;//campo, praia
 
-    public Imovel(
-        String numIPTU,
-        String rua,
-        String numero,
-        String cep,
-        String estado,
-        String cidade,
-        String tipo, 
-        String utilizacao
-    ){
+    public Imovel(String numIPTU,String rua,String numero,String cep,String estado,String cidade,String tipo,String utilizacao){
         this.numIPTU = numIPTU;
-        this.rua = rua;
-        this.numero = numero;
-        this.cep = cep;
-        this.estado = estado;
-        this.cidade = cidade; 
+        this.endereco = new Endereco(rua, numero, cidade, estado, cep);
         this.tipo = tipo;  
         this.utilizacao = utilizacao;
     }
 
-    public Imovel(
-        String numIPTU,
-        String rua,
-        String numero,
-        String cep,
-        String tipo, 
-        String utilizacao
-    ){
-        this(
-            numIPTU,
-            rua,
-            numero,
-            cep,
-            "Bahia",
-            "Salvador",
-            tipo,  
-            utilizacao);
+    public Imovel(String numIPTU,String rua,String numero,String cep,String tipo,String utilizacao){
+        this(numIPTU,rua,numero,cep,Estados.BA.getUF(),"Salvador",tipo,utilizacao);
     }
 
     public String getNumIPTU() {
@@ -54,46 +22,6 @@ public class Imovel {
 
     public void setNumIPTU(String numIPTU) {
         this.numIPTU = numIPTU;
-    }
-
-    public String getRua() {
-        return this.rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getNumero() {
-        return this.numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCep() {
-        return this.cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getEstado() {
-        return this.estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCidade() {
-        return this.cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
     }
 
     public String getTipo() {
@@ -112,4 +40,17 @@ public class Imovel {
         this.utilizacao = utilizacao;
     }
 
+    public String getEndereco() {
+        return endereco.toString();
+    }
+
+    @Override
+    public String toString() {
+
+        return "============ Dados do Imóvel ===========\n\n" +
+                "IPTU: " + this.getNumIPTU() + "\n" +
+                "Tipo: " + this.getTipo() + "\n" +
+                "Utilização: " + this.getUtilizacao() + "\n\n" +
+                this.endereco.toString() + "\n";
+    }
 }
