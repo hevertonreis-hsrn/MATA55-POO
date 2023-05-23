@@ -35,6 +35,6 @@ public enum Estados {
     }
 
     public String getUF() {
-        return uf;
+        return this.uf;
     }
 }
