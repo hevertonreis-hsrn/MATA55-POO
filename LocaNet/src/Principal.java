@@ -85,6 +85,7 @@ public class Principal {
 
             imovel1.adicionarDataAlugado(data2);
             imovel1.adicionarDataDisponivel(data2);
+            imovel1.adicionarDataAlugado(data2);
             imovel1.adicionarDataDisponivel(data3);
 
             imovel1.adicionarDataBloqueado(data4);

@@ -81,11 +81,29 @@ public class Imovel {
         return false;
     }    
 
-    public void adicionarDataAlugado(String data){
+    public boolean adicionarDataAlugado(String data){
 
         LocalDate d = parseStringData(data);
 
-        this.agenda.setDatasAlugado(d);
+        if(!this.agenda.compararDatasBloqueado(d)){
+
+            if(!this.agenda.compararDatasAlugado(d)){
+
+                if(!this.agenda.compararDatasDisponivel(d)){
+                    System.out.println("O imóvel não se encontra [disponível] na data inserida!");
+                    return false;
+                } else {
+                    this.agenda.removerDataDisponivel(d);
+                    this.agenda.setDatasAlugado(d);
+                    return true;
+                }
+            }
+            System.out.println("O imóvel se encontra [alugado] na data inserida!");
+            return false;
+        }
+        System.out.println("O imóvel se encontra [bloqueado] na data inserida!");
+        return false;
+
     }
 
     public boolean adicionarDataBloqueado(String data){
