@@ -76,9 +76,18 @@ public class Principal {
             System.out.println("Listando imóveis do tipo 'casa'\n"); 
             prop1.listarImovelPorTipo("casa");
 
-            String data1 = "23/11/2015";
+            String data1 = "23/05/2023";
+            String data2 = "24/05/2023";
+            String data3 = "25/05/2023";
+            String data4 = "25/05/2023";
 
-            imovel1.adicionarDataDisponivel(data1);
+            imovel1.adicionarDataBloqueado(data1);
+
+            imovel1.adicionarDataAlugado(data2);
+            imovel1.adicionarDataDisponivel(data2);
+            imovel1.adicionarDataDisponivel(data3);
+
+            imovel1.adicionarDataBloqueado(data4);
 
             System.out.println("Linha teste\n");
 

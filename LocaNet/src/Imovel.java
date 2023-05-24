@@ -1,7 +1,5 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Imovel {
     
@@ -59,21 +57,68 @@ public class Imovel {
                 "Tipo: " + this.getTipo() + "\n" +
                 "Utilização: " + this.getUtilizacao() + "\n\n" +
                 this.endereco.toString() + "\n";
+    }    
+    
+    public boolean adicionarDataDisponivel(String data){
+        
+        LocalDate d = parseStringData(data);
+
+        if(!this.agenda.compararDatasBloqueado(d)){
+
+            if(!this.agenda.compararDatasAlugado(d)){
+
+                if(!this.agenda.compararDatasDisponivel(d)){
+                    this.agenda.setDatasDisponivel(d);
+                    return true;
+                }
+                System.out.println("Data já cadastrada!");
+                return false;
+            }
+            System.out.println("O imóvel se encontra [alugado] na data inserida!");
+            return false;
+        }
+        System.out.println("O imóvel se encontra [bloqueado] na data inserida!");
+        return false;
+    }    
+
+    public void adicionarDataAlugado(String data){
+
+        LocalDate d = parseStringData(data);
+
+        this.agenda.setDatasAlugado(d);
     }
 
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+    public boolean adicionarDataBloqueado(String data){
 
-    public void adicionarDataDisponivel(String data){
-        
-        Calendar c = Calendar.getInstance();
-        Date d = new Date();
-        try {
-            d = formato.parse(data);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        LocalDate d = parseStringData(data);
+
+        if(!this.agenda.compararDatasBloqueado(d)){
+
+            if(!this.agenda.compararDatasAlugado(d)){
+
+                if(!this.agenda.compararDatasDisponivel(d)){
+                    this.agenda.setDatasBloqueado(d);
+                    return true;
+                } else {
+                    this.agenda.removerDataDisponivel(d);
+                    this.agenda.setDatasBloqueado(d);
+                    return true;
+                }
+            }
+            System.out.println("O imóvel se encontra [alugado] na data inserida!");
+            return false;
         }
-        c.setTime(d);
+        System.out.println("Data já cadastrada!");
+        return false;
+        
+    }
 
-        this.agenda.setDatasDisponivel(c);
+    private LocalDate parseStringData(String data) {
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        LocalDate d = LocalDate.parse(data, formato);
+
+        return d;
     }
 }
