@@ -1,4 +1,4 @@
-/*public class Principal {
+public class Principal {
     
     public static void main(String[] args) {
 
@@ -76,9 +76,15 @@
             System.out.println("Listando imóveis do tipo 'casa'\n"); 
             prop1.listarImovelPorTipo("casa");
 
+            String data1 = "23/11/2015";
+
+            imovel1.adicionarDataDisponivel(data1);
+
+            System.out.println("Linha teste\n");
+
         } else {
             System.out.println("A UF informada é inválida!!!");
         }
 
     }
-}*/
+}

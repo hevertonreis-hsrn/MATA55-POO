@@ -13,4 +13,17 @@ public class Agenda {
         this.datasAlugado = new ArrayList<>();
         this.datasBloqueado = new ArrayList<>();
     }
+
+    public void setDatasDisponivel(Calendar data) {
+        this.datasDisponivel.add(data);
+    }
+
+    public void setDatasAlugado(Calendar data) {
+        this.datasAlugado.add(data);
+    }
+
+    public void setDatasBloqueado(Calendar data) {
+        this.datasBloqueado.add(data);
+    }
+
 }

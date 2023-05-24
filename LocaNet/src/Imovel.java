@@ -1,3 +1,8 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Imovel {
     
     private String numIPTU;
@@ -54,5 +59,21 @@ public class Imovel {
                 "Tipo: " + this.getTipo() + "\n" +
                 "Utilização: " + this.getUtilizacao() + "\n\n" +
                 this.endereco.toString() + "\n";
+    }
+
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+
+    public void adicionarDataDisponivel(String data){
+        
+        Calendar c = Calendar.getInstance();
+        Date d = new Date();
+        try {
+            d = formato.parse(data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.setTime(d);
+
+        this.agenda.setDatasDisponivel(c);
     }
 }
