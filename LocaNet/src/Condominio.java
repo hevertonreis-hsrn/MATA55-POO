@@ -1,18 +1,22 @@
-public class Condominio extends UnidadeCompartilhada{
+import java.util.ArrayList;
+import java.util.List;
 
-    private String itensLazer;
+public class Condominio{
 
-    public Condominio(String numIPTU, String rua, String numero, String cep, String estado, String cidade, String tipo,
-            String utilizacao) {
-        super(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao);
-        //TODO Auto-generated constructor stub
+    private List<String> itensLazer;
+    private Endereco endereco;
+
+    public Condominio(String rua, String numero, String cep, String estado, String cidade) {
+        this.endereco = new Endereco(rua, numero, cidade, estado, cep);
+        this.itensLazer = new ArrayList<>();
     }
     
-    public String getItensLazer() {
-        return this.itensLazer;
+    public void adicionarItemLazer(String itemLazer) {
+        this.itensLazer.add(itemLazer);
     }
 
-    public void setItensLazer(String itensLazer) {
-        this.itensLazer = itensLazer;
+    public int qtdItensLazer(){
+        return itensLazer.size();
     }
+
 }

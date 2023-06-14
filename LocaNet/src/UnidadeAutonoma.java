@@ -24,4 +24,9 @@ public class UnidadeAutonoma extends Imovel {
     public void setAreaConstruida(double areaConstruida) {
         this.areaConstruida = areaConstruida;
     }
+
+    @Override
+    public double valorReferencia() {        
+        return areaConstruida*15;
+    }
 }

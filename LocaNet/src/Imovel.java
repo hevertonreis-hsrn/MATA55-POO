@@ -1,15 +1,15 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Imovel {
+public abstract class Imovel {
     
-    private String numIPTU;
+    private int numIPTU;
     private Endereco endereco;
     private String tipo; // casa, apto
     private String utilizacao;//campo, praia
     private Agenda agenda;
 
-    public Imovel(String numIPTU,String rua,String numero,String cep,String estado,String cidade,String tipo,String utilizacao){
+    public Imovel(int numIPTU,String rua,String numero,String cep,String estado,String cidade,String tipo,String utilizacao){
         this.numIPTU = numIPTU;
         this.endereco = new Endereco(rua, numero, cidade, estado, cep);
         this.tipo = tipo;  
@@ -17,15 +17,15 @@ public class Imovel {
         this.agenda = new Agenda();
     }
 
-    public Imovel(String numIPTU,String rua,String numero,String cep,String tipo,String utilizacao){
+    public Imovel(int numIPTU,String rua,String numero,String cep,String tipo,String utilizacao){
         this(numIPTU,rua,numero,cep,Estados.BA.getUF(),"Salvador",tipo,utilizacao);
     }
 
-    public String getNumIPTU() {
+    public int getNumIPTU() {
         return this.numIPTU;
     }
 
-    public void setNumIPTU(String numIPTU) {
+    public void setNumIPTU(int numIPTU) {
         this.numIPTU = numIPTU;
     }
 
@@ -57,7 +57,9 @@ public class Imovel {
                 "Tipo: " + this.getTipo() + "\n" +
                 "Utilização: " + this.getUtilizacao() + "\n\n" +
                 this.endereco.toString() + "\n";
-    }    
+    }
+    
+    public abstract double valorReferencia();
     
     public boolean adicionarDataDisponivel(String data){
         
