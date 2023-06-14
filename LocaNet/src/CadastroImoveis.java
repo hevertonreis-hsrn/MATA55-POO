@@ -21,4 +21,14 @@ public class CadastroImoveis {
         this.cadastro.add(imovel);
     }
 
+    public Imovel buscarImovel(int numIPTU) {
+        
+        for (Imovel imovel : cadastro) {
+            
+            if(imovel.getNumIPTU() == numIPTU){
+                return imovel;
+            }
+        }
+        return null;
+    }
 }

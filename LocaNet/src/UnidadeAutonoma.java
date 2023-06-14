@@ -3,10 +3,11 @@ public class UnidadeAutonoma extends Imovel {
     private double areaUtil;
     private double areaConstruida;
 
-    public UnidadeAutonoma(String numIPTU, String rua, String numero, String cep, String estado, String cidade,
-            String tipo, String utilizacao) {
+    public UnidadeAutonoma(int numIPTU, String rua, String numero, String cep, String estado, String cidade,
+            String tipo, String utilizacao, double areaUtil, double areaConstruida) {
         super(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao);
-        //TODO Auto-generated constructor stub
+        this.areaUtil = areaUtil;
+        this.areaConstruida = areaConstruida;
     }
     
     public double getAreaUtil() {

@@ -4,8 +4,9 @@ public class UnidadeCompartilhada extends Imovel{
     private Condominio condominio;
 
     public UnidadeCompartilhada(int numIPTU, String rua, String numero, String cep, String estado, String cidade,
-            String tipo, String utilizacao) {
+            String tipo, String utilizacao, String identificacao) {
         super(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao);
+        this.identificacao = identificacao;
         this.condominio = new Condominio(rua, numero, cep, estado, cidade);
     }
     

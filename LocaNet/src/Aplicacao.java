@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,22 +9,26 @@ public class Aplicacao {
         System.out.println("0. Sair");
         System.out.println("1. Cadastrar Imóvel");
         System.out.println("2. Cadastrar Proprietário");
+        System.out.println("3. Cadastrar Unidade Autônoma");
+        System.out.println("4. Cadastrar Unidade Compartilhada");
+        System.out.println("5. Pesquisar Valor de Referência do Aluguel");
         System.out.println("Opcao:");
     }
 
-    public static void cadastrarImovel(Scanner entrada, CadastroImoveis cdImoveis) {
+    //Variáveis Globais
+    static int numIPTU;
+    static String rua,numero,cep,cidade;
+    static String estado = "BA";
+    static String tipo = "casa";
+    static String utilizacao = "moradia";
+
+    public static void entradaImovel(Scanner entrada){
 
         entrada.nextLine();
 
-        System.out.println("Você entrou no método de Cadastro de Imóveis.");
-
-        String numIPTU,rua,numero,cep,cidade;
-        String estado = "BA";
-        String tipo = "casa";
-        String utilizacao = "moradia";
-
-        System.out.println("Informe o IPTU:");
-        numIPTU = entrada.nextLine();
+        System.out.println("Informe o IPTU (Apenas números):");
+        numIPTU = entrada.nextInt();
+        entrada.nextLine();
 
         System.out.println("Informe a Rua:");
         rua = entrada.nextLine();
@@ -110,6 +115,13 @@ public class Aplicacao {
             }
             
         } while (!utilValido);
+    }
+
+    public static void cadastrarImovel(Scanner entrada, CadastroImoveis cdImoveis) {
+
+        System.out.println("Você entrou no método de Cadastro de Imóveis.");
+
+        entradaImovel(entrada);
 
         Imovel m = new Imovel(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao);
 
@@ -172,6 +184,73 @@ public class Aplicacao {
 
     }
     
+    public static void cadastrarUnidadeAutonoma(Scanner entrada, CadastroImoveis cdImoveis) {
+
+        System.out.println("Você entrou no método de Cadastro de Unidades Autônomas.");
+
+        entradaImovel(entrada);
+
+        System.out.println("Informe a Área Útil (m^2) (Ex: 10,25):");
+        double areaUtil = entrada.nextDouble();
+
+        System.out.println("Informe a Área Construída (m^2) (Ex: 10,25):");
+        double areaConstruida = entrada.nextDouble();
+
+        UnidadeAutonoma ua = new UnidadeAutonoma(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao, areaUtil, areaConstruida);
+
+        cdImoveis.adicionarImovel(ua);
+
+    }
+
+    public static void cadastrarUnidadeCompartilhada(Scanner entrada, CadastroImoveis cdImoveis) {
+        
+        System.out.println("Você entrou no método de Cadastro de Unidades Compartilhadas.");
+
+        entradaImovel(entrada);
+
+        entrada.nextLine();
+
+        System.out.println("Informe a Identificação:");
+        String identificacao = entrada.nextLine();
+
+        UnidadeCompartilhada uc = new UnidadeCompartilhada(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao, identificacao);
+
+        String itemLazer = null;
+
+        do {
+            System.out.println("\nInforme um item de lazer:");
+            System.out.println("Caso não haja itens de lazer, tecle 'Enter'");
+            itemLazer = entrada.nextLine();
+            if(!itemLazer.equals("")){
+                uc.adicionarItemLazer(itemLazer);
+            }    
+        } while (!itemLazer.equals(""));
+
+        cdImoveis.adicionarImovel(uc);
+    }
+    
+    private static void valorReferenciaAluguel(Scanner entrada, CadastroImoveis cdImoveis) {
+        
+        entrada.nextLine();
+
+        System.out.println("Você entrou no método de Pesquisa Valor de Referência do Aluguel");
+
+        System.out.println("Informe o IPTU do Imóvel (Apenas números):");
+        numIPTU = entrada.nextInt();
+        
+        Imovel imovel = cdImoveis.buscarImovel(numIPTU);
+
+        double valorRef = imovel.valorReferencia();
+        DecimalFormat formato = new DecimalFormat("#.##");      
+        valorRef = Double.valueOf(formato.format(valorRef));
+
+        System.out.println("O valor de referência para o aluguel é:");
+        
+        System.out.println("R$ "+ valorRef + "\n");
+    }
+    
+    
+    
     public static void main(String[] args) {
 
         CadastroImoveis cdImoveis = new CadastroImoveis();
@@ -192,9 +271,21 @@ public class Aplicacao {
             case 2:
                 cadastrarProprietario(entrada,cdProprietario);
                 break;
+
+            case 3:
+                cadastrarUnidadeAutonoma(entrada, cdImoveis);
+                break;
+
+            case 4:
+                cadastrarUnidadeCompartilhada(entrada, cdImoveis);
+                break;
+
+            case 5:
+                valorReferenciaAluguel(entrada, cdImoveis);
+                break;
             
-            default:
-                System.out.println("Opção inválida.");
+            //default:
+            //    System.out.println("Opção inválida.");
             }
         } while(opcao != 0);
 

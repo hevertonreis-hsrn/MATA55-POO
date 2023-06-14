@@ -18,7 +18,7 @@ public class Principal {
         
         if(estadoValido == true){
             imovel1 = new Imovel(
-            "000000123456",
+            123456,
             "Rua Augusta Brasil",
             "123A",
             "01234-567" , 
@@ -28,7 +28,7 @@ public class Principal {
             "campo");
 
             imovel2 = new Imovel(
-            "000000456880",
+            456880,
             "Rua Felipa Caxias",
             "0001C",
             "55231-773" , 
@@ -54,7 +54,7 @@ public class Principal {
             prop1.listarImovelPorTipo("apto");
 
             imovel3 = new Imovel(
-            "000000123499",
+            123499,
             "Rua 13 de Maio",
             "0001",
             "01234-775" , 

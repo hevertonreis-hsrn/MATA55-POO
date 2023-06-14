@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public abstract class Imovel {
+public class Imovel {
     
     private int numIPTU;
     private Endereco endereco;
@@ -59,7 +59,9 @@ public abstract class Imovel {
                 this.endereco.toString() + "\n";
     }
     
-    public abstract double valorReferencia();
+    public double valorReferencia(){
+        return 0;
+    };
     
     public boolean adicionarDataDisponivel(String data){
         
