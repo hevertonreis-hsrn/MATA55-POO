@@ -22,6 +22,10 @@ public class UnidadeCompartilhada extends Imovel{
         this.condominio.adicionarItemLazer(itemLazer);
     }
 
+    public int getQtdItensLazer(){
+        return condominio.qtdItensLazer();
+    }
+
     @Override
     public double valorReferencia() {
         int qtdItensLazer = condominio.qtdItensLazer();

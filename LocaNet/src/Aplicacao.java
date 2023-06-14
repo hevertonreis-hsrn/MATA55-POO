@@ -1,5 +1,5 @@
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Aplicacao {
@@ -12,6 +12,7 @@ public class Aplicacao {
         System.out.println("3. Cadastrar Unidade Autônoma");
         System.out.println("4. Cadastrar Unidade Compartilhada");
         System.out.println("5. Pesquisar Valor de Referência do Aluguel");
+        System.out.println("6. Pesquisar Valor de Referência do Aluguel com Sazonalidade");
         System.out.println("Opcao:");
     }
 
@@ -233,7 +234,7 @@ public class Aplicacao {
         
         entrada.nextLine();
 
-        System.out.println("Você entrou no método de Pesquisa Valor de Referência do Aluguel");
+        System.out.println("Você entrou no método de Pesquisar Valor de Referência do Aluguel");
 
         System.out.println("Informe o IPTU do Imóvel (Apenas números):");
         numIPTU = entrada.nextInt();
@@ -241,15 +242,67 @@ public class Aplicacao {
         Imovel imovel = cdImoveis.buscarImovel(numIPTU);
 
         double valorRef = imovel.valorReferencia();
-        DecimalFormat formato = new DecimalFormat("#.##");      
-        valorRef = Double.valueOf(formato.format(valorRef));
+
+        if(imovel instanceof UnidadeCompartilhada){
+            UnidadeCompartilhada uc = (UnidadeCompartilhada) imovel;
+            if(uc.getQtdItensLazer() == 0){
+                valorRef -= valorRef*0.1;
+            }
+        }
 
         System.out.println("O valor de referência para o aluguel é:");
         
         System.out.println("R$ "+ valorRef + "\n");
     }
     
-    
+    private static void valorReferenciaAluguelComSazonalidade(Scanner entrada, CadastroImoveis cdImoveis) {
+        
+        entrada.nextLine();
+
+        System.out.println("Você entrou no método de Pesquisar Valor de Referência do Aluguel com Sazonalidade");
+
+        System.out.println("Informe o IPTU do Imóvel (Apenas números):");
+        numIPTU = entrada.nextInt();
+        
+        Imovel imovel = cdImoveis.buscarImovel(numIPTU);
+
+        double valorRef = imovel.valorReferencia();
+
+        ArrayList<String> periodos = new ArrayList<>();
+        for (Periodos p : Periodos.values()) {
+            periodos.add(p.getPeriodo());
+        }
+
+        boolean periodoValido = false;
+
+        do {
+
+            System.out.println("\nInforme o Período.\n");
+            System.out.println("Opções:");                       
+
+            for (int i = 0; i < periodos.size(); i++) {
+                System.out.println("["+ i + "] " + periodos.get(i));
+            }
+
+            int opt = entrada.nextInt();
+
+            if (opt < 0 || opt >= periodos.size()) {
+                System.out.println("Período Inválido!\n");
+            }else if(opt == 0){
+                periodoValido = true;
+            } else {
+                Optional<Periodos> prd = Periodos.buscarIndicePorPeriodo(periodos.get(opt));
+                int indice = prd.get().getIndice();
+                valorRef += valorRef*indice;
+                periodoValido = true;
+            }
+            
+        } while (!periodoValido);
+
+        System.out.println("O valor de referência para o aluguel é:");
+        
+        System.out.println("R$ "+ valorRef + "\n");
+    }
     
     public static void main(String[] args) {
 
@@ -283,9 +336,10 @@ public class Aplicacao {
             case 5:
                 valorReferenciaAluguel(entrada, cdImoveis);
                 break;
-            
-            //default:
-            //    System.out.println("Opção inválida.");
+
+            case 6:
+                valorReferenciaAluguelComSazonalidade(entrada, cdImoveis);
+                break;
             }
         } while(opcao != 0);
 
