@@ -73,6 +73,7 @@ public class Imovel {
 
                 if(!this.agenda.compararDatasDisponivel(d)){
                     this.agenda.setDatasDisponivel(d);
+                    this.agenda.ordenarDatasDisponiveis();
                     return true;
                 }
                 System.out.println("Data já cadastrada!");

@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Agenda {
@@ -69,5 +70,9 @@ public class Agenda {
     public void removerDataBloqueado(LocalDate d) {
 
         this.datasBloqueado.remove(d);
+    }
+
+    public void ordenarDatasDisponiveis(){
+        Collections.sort(this.datasDisponivel, new ComparadorDeDatas());
     }
 }

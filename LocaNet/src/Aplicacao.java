@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Aplicacao {
+public class Aplicacao implements IAluguel {
     
     public static void menu(){
         System.out.println("\tBem Vindo ao LocaNet! Selecione uma opção abaixo.");
@@ -13,6 +13,7 @@ public class Aplicacao {
         System.out.println("4. Cadastrar Unidade Compartilhada");
         System.out.println("5. Pesquisar Valor de Referência do Aluguel");
         System.out.println("6. Pesquisar Valor de Referência do Aluguel com Sazonalidade");
+        System.out.println("7. Adicionar Data Disponível para Aluguel");
         System.out.println("Opcao:");
     }
 
@@ -304,6 +305,31 @@ public class Aplicacao {
         System.out.println("R$ "+ valorRef + "\n");
     }
     
+    private static void adicionarDataDisponivel(Scanner entrada, CadastroImoveis cdImoveis) {
+        
+        entrada.nextLine();
+
+        System.out.println("Você entrou no método de Adicionar Data Disponível para Aluguel");
+
+        System.out.println("Informe o IPTU do Imóvel (Apenas números):");
+        numIPTU = entrada.nextInt();
+        
+        Imovel imovel = cdImoveis.buscarImovel(numIPTU);
+
+        System.out.println("Informe um valor para a Data");
+        System.out.println("Ex: 15/04/1998");
+
+        entrada.nextLine();
+        
+        String data = entrada.nextLine();
+
+        boolean cadastrado = imovel.adicionarDataDisponivel(data);
+
+        if (cadastrado) {
+            System.out.println("Data cadastrada!");
+        }
+    }
+
     public static void main(String[] args) {
 
         CadastroImoveis cdImoveis = new CadastroImoveis();
@@ -340,9 +366,27 @@ public class Aplicacao {
             case 6:
                 valorReferenciaAluguelComSazonalidade(entrada, cdImoveis);
                 break;
+
+            case 7:
+                adicionarDataDisponivel(entrada, cdImoveis);
+                break;
             }
         } while(opcao != 0);
 
         entrada.close();
+    }
+
+    
+
+    @Override
+    public boolean disponibilidadeImovel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'disponibilidadeImovel'");
+    }
+
+    @Override
+    public double valorAluguel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'valorAluguel'");
     }
 }
