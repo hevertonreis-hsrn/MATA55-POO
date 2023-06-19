@@ -1,8 +1,11 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Aplicacao implements IAluguel {
+public class Aplicacao {
     
     public static void menu(){
         System.out.println("\tBem Vindo ao LocaNet! Selecione uma opção abaixo.");
@@ -316,18 +319,54 @@ public class Aplicacao implements IAluguel {
         
         Imovel imovel = cdImoveis.buscarImovel(numIPTU);
 
-        System.out.println("Informe um valor para a Data");
-        System.out.println("Ex: 15/04/1998");
+        System.out.println("Deseja adicionar 1 (uma) ou mais Datas? Selecione uma opção:");
+        System.out.println("[0] uma Data");
+        System.out.println("[1] um intervalo de Datas");
 
         entrada.nextLine();
+
+        int opcao = entrada.nextInt();
+        boolean cadastrado;
+
+        if (opcao == 0) {
+            System.out.println("Informe um valor para a Data");
+            System.out.println("Ex: 15/04/1998");
+
+            entrada.nextLine();
         
-        String data = entrada.nextLine();
+            String data = entrada.nextLine();
 
-        boolean cadastrado = imovel.adicionarDataDisponivel(data);
+            cadastrado = imovel.adicionarDataDisponivel(data);
 
-        if (cadastrado) {
-            System.out.println("Data cadastrada!");
+            if (cadastrado) {
+                System.out.println("Data cadastrada!");
+            }
+        } else if(opcao == 1){
+            System.out.println("Informe um valor para a Data Inicial");
+            System.out.println("Ex: 15/04/1998");
+
+            entrada.nextLine();
+        
+            String data = entrada.nextLine();
+
+            LocalDate dataInicial = parseStringData(data);
+
+            System.out.println("Informe um valor para a Data Final");
+            System.out.println("Ex: 15/04/1998");
+
+            data = entrada.nextLine();
+
+            LocalDate dataFinal = parseStringData(data);
+
+            long intervalo = ChronoUnit.DAYS.between(dataInicial, dataFinal);
+
+            for (int i = 0; i <= intervalo; i++) {
+                data = dataInicial.plusDays(i).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                imovel.adicionarDataDisponivel(data);
+            }
         }
+
+        
     }
 
     public static void main(String[] args) {
@@ -376,17 +415,12 @@ public class Aplicacao implements IAluguel {
         entrada.close();
     }
 
-    
+    private static LocalDate parseStringData(String data) {
 
-    @Override
-    public boolean disponibilidadeImovel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'disponibilidadeImovel'");
-    }
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    @Override
-    public double valorAluguel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'valorAluguel'");
+        LocalDate d = LocalDate.parse(data, formato);
+
+        return d;
     }
 }

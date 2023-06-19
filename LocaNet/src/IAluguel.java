@@ -1,5 +1,5 @@
 public interface IAluguel {
     
-    public boolean disponibilidadeImovel();
+    public boolean disponibilidadeImovel(String dataInicial, String dataFinal);
     public double valorAluguel();
 }

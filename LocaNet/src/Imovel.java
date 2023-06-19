@@ -1,7 +1,8 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
-public class Imovel {
+public class Imovel implements IAluguel{
     
     private int numIPTU;
     private Endereco endereco;
@@ -143,5 +144,29 @@ public class Imovel {
         LocalDate d = LocalDate.parse(data, formato);
 
         return d;
+    }
+
+    @Override
+    public boolean disponibilidadeImovel(String dataInicial, String dataFinal) {
+
+        LocalDate dI = parseStringData(dataInicial);
+        LocalDate dF = parseStringData(dataFinal);
+
+        long intervalo = ChronoUnit.DAYS.between(dI, dF);
+
+        this.agenda.compararDatasDisponivel(dF);
+
+        //TODO: verificar se o intervalo existe entre as datas disponíveis, depois, verificar se todo o intervalo está disponível
+
+        for (int i = 0; i <= intervalo; i++) {
+            
+        }
+        return false;
+    }
+
+    @Override
+    public double valorAluguel() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'valorAluguel'");
     }
 }
