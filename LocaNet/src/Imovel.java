@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class Imovel implements IAluguel{
     
@@ -154,12 +155,25 @@ public class Imovel implements IAluguel{
 
         long intervalo = ChronoUnit.DAYS.between(dI, dF);
 
-        this.agenda.compararDatasDisponivel(dF);
+        int contador = 0;
 
-        //TODO: verificar se o intervalo existe entre as datas disponíveis, depois, verificar se todo o intervalo está disponível
+        if(this.agenda.compararDatasDisponivel(dI) && this.agenda.compararDatasDisponivel(dF)){
 
-        for (int i = 0; i <= intervalo; i++) {
-            
+            List<LocalDate> datasDisponiveis = this.agenda.getDatasDisponivel();
+            //int dias = 0;
+
+            for (int i = datasDisponiveis.indexOf(dI); i <= intervalo + 1; i++) {
+                ComparadorDeDatas comparador = new ComparadorDeDatas();
+                int comparacao = comparador.compare(datasDisponiveis.get(i), dI.plusDays(contador));
+                if (comparacao == 0) {
+                    contador++;
+                    //dias++;
+                }
+            }
+
+            if(contador == intervalo){
+                return true;
+            }
         }
         return false;
     }

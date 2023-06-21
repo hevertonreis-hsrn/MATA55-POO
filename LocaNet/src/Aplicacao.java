@@ -17,6 +17,7 @@ public class Aplicacao {
         System.out.println("5. Pesquisar Valor de Referência do Aluguel");
         System.out.println("6. Pesquisar Valor de Referência do Aluguel com Sazonalidade");
         System.out.println("7. Adicionar Data Disponível para Aluguel");
+        System.out.println("8. Verificar Disponibilidade para Aluguel");
         System.out.println("Opcao:");
     }
 
@@ -369,6 +370,37 @@ public class Aplicacao {
         
     }
 
+    private static void verificarDisponibilidade(Scanner entrada, CadastroImoveis cdImoveis) {
+        entrada.nextLine();
+
+        System.out.println("Você entrou no método de Verificar Disponibilidade para Aluguel");
+
+        System.out.println("Informe o IPTU do Imóvel (Apenas números):");
+        numIPTU = entrada.nextInt();
+        
+        Imovel imovel = cdImoveis.buscarImovel(numIPTU);
+
+        System.out.println("Informe um valor para a Data Inicial");
+        System.out.println("Ex: 15/04/1998");
+
+        entrada.nextLine();
+        
+        String dataInicial = entrada.nextLine();
+
+        System.out.println("Informe um valor para a Data Final");
+        System.out.println("Ex: 15/04/1998");
+        
+        String dataFinal = entrada.nextLine();
+
+        boolean disponivel = imovel.disponibilidadeImovel(dataInicial, dataFinal);
+
+        if (disponivel) {
+            System.out.println("O imóvel se encontra disponível no intervalo");
+        }else{
+            System.out.println("O imóvel não se encontra disponível no intervalo");
+        }
+    }
+
     public static void main(String[] args) {
 
         CadastroImoveis cdImoveis = new CadastroImoveis();
@@ -408,6 +440,10 @@ public class Aplicacao {
 
             case 7:
                 adicionarDataDisponivel(entrada, cdImoveis);
+                break;
+
+            case 8:
+                verificarDisponibilidade(entrada, cdImoveis);
                 break;
             }
         } while(opcao != 0);

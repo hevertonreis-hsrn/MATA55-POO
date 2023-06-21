@@ -15,6 +15,10 @@ public class Agenda {
         this.datasBloqueado = new ArrayList<>();
     }
 
+    public List<LocalDate> getDatasDisponivel(){
+        return this.datasDisponivel;
+    }
+
     public void setDatasDisponivel(LocalDate data) {
         this.datasDisponivel.add(data);
     }
