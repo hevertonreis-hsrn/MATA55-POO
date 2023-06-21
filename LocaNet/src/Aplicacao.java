@@ -18,6 +18,7 @@ public class Aplicacao {
         System.out.println("6. Pesquisar Valor de Referência do Aluguel com Sazonalidade");
         System.out.println("7. Adicionar Data Disponível para Aluguel");
         System.out.println("8. Verificar Disponibilidade para Aluguel");
+        System.out.println("9. Verificar Valor do Aluguel");
         System.out.println("Opcao:");
     }
 
@@ -367,7 +368,6 @@ public class Aplicacao {
             }
         }
 
-        
     }
 
     private static void verificarDisponibilidade(Scanner entrada, CadastroImoveis cdImoveis) {
@@ -401,6 +401,54 @@ public class Aplicacao {
         }
     }
 
+    private static void consultarValorAluguel(Scanner entrada, CadastroImoveis cdImoveis) {
+        entrada.nextLine();
+
+        System.out.println("Você entrou no método de Consultar Valor do Aluguel");
+
+        System.out.println("Informe o IPTU do Imóvel (Apenas números):");
+        numIPTU = entrada.nextInt();
+        
+        Imovel imovel = cdImoveis.buscarImovel(numIPTU);
+
+        System.out.println("Deseja consultar por 1 (uma) ou mais Datas? Selecione uma opção:");
+        System.out.println("[0] uma Data");
+        System.out.println("[1] um intervalo de Datas");
+
+        entrada.nextLine();
+
+        int opcao = entrada.nextInt();
+
+        if (opcao == 0) {
+            System.out.println("Informe um valor para a Data");
+            System.out.println("Ex: 15/04/1998");
+
+            entrada.nextLine();
+        
+            String data = entrada.nextLine();
+
+            double valor = imovel.valorAluguel(data, null);
+
+            System.out.println("Valor do aluguel: R$ " + valor);
+            
+        } else if(opcao == 1){
+            System.out.println("Informe um valor para a Data Inicial");
+            System.out.println("Ex: 15/04/1998");
+
+            entrada.nextLine();
+        
+            String dataInicial = entrada.nextLine();
+
+            System.out.println("Informe um valor para a Data Final");
+            System.out.println("Ex: 15/04/1998");
+
+            String dataFinal = entrada.nextLine();
+
+            double valor = imovel.valorAluguel(dataInicial, dataFinal);
+
+            System.out.println("Valor do aluguel: R$ " + valor);
+        }
+    }
     public static void main(String[] args) {
 
         CadastroImoveis cdImoveis = new CadastroImoveis();
@@ -444,6 +492,10 @@ public class Aplicacao {
 
             case 8:
                 verificarDisponibilidade(entrada, cdImoveis);
+                break;
+
+            case 9:
+                consultarValorAluguel(entrada, cdImoveis);
                 break;
             }
         } while(opcao != 0);

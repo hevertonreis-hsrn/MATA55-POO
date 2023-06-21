@@ -7,8 +7,8 @@ public class Imovel implements IAluguel{
     
     private int numIPTU;
     private Endereco endereco;
-    private String tipo; // casa, apto
-    private String utilizacao;//campo, praia
+    private String tipo;
+    private String utilizacao;
     private Agenda agenda;
 
     public Imovel(int numIPTU,String rua,String numero,String cep,String estado,String cidade,String tipo,String utilizacao){
@@ -160,14 +160,12 @@ public class Imovel implements IAluguel{
         if(this.agenda.compararDatasDisponivel(dI) && this.agenda.compararDatasDisponivel(dF)){
 
             List<LocalDate> datasDisponiveis = this.agenda.getDatasDisponivel();
-            //int dias = 0;
 
             for (int i = datasDisponiveis.indexOf(dI); i <= intervalo + 1; i++) {
                 ComparadorDeDatas comparador = new ComparadorDeDatas();
                 int comparacao = comparador.compare(datasDisponiveis.get(i), dI.plusDays(contador));
                 if (comparacao == 0) {
                     contador++;
-                    //dias++;
                 }
             }
 
@@ -179,8 +177,17 @@ public class Imovel implements IAluguel{
     }
 
     @Override
-    public double valorAluguel() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'valorAluguel'");
+    public double valorAluguel(String dataInicial, String dataFinal) {
+        
+        if (dataFinal == null) {
+            return this.valorReferencia();
+        }
+
+        LocalDate dI = parseStringData(dataInicial);
+        LocalDate dF = parseStringData(dataFinal);
+
+        long qtdDias = ChronoUnit.DAYS.between(dI, dF);
+
+        return this.valorReferencia()*qtdDias;
     }
 }
