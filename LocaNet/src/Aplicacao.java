@@ -274,6 +274,14 @@ public class Aplicacao {
 
         double valorRef = imovel.valorReferencia();
 
+        valorRef = retornaIndiceSazonalidade(entrada, valorRef);
+
+        System.out.println("O valor de referência para o aluguel é:");
+        
+        System.out.println("R$ "+ valorRef + "\n");
+    }
+
+    private static double retornaIndiceSazonalidade(Scanner entrada, double valorRef) {
         ArrayList<String> periodos = new ArrayList<>();
         for (Periodos p : Periodos.values()) {
             periodos.add(p.getPeriodo());
@@ -304,10 +312,7 @@ public class Aplicacao {
             }
             
         } while (!periodoValido);
-
-        System.out.println("O valor de referência para o aluguel é:");
-        
-        System.out.println("R$ "+ valorRef + "\n");
+        return valorRef;
     }
     
     private static void adicionarDataDisponivel(Scanner entrada, CadastroImoveis cdImoveis) {
@@ -427,7 +432,18 @@ public class Aplicacao {
         
             String data = entrada.nextLine();
 
-            double valor = imovel.valorAluguel(data, null);
+            System.out.println("Deseja adicionar indice de sazonalidade?");
+            System.out.println("[0] NÃO");
+            System.out.println("[1] SIM");
+
+            int opt = entrada.nextInt();
+            double valor = 0;
+
+            if (opt == 0) {
+                valor = imovel.valorAluguel(data, null);
+            }else if(opt == 1){
+                valor = retornaIndiceSazonalidade(entrada, imovel.valorAluguel(data, null));
+            }
 
             System.out.println("Valor do aluguel: R$ " + valor);
             
@@ -444,7 +460,18 @@ public class Aplicacao {
 
             String dataFinal = entrada.nextLine();
 
-            double valor = imovel.valorAluguel(dataInicial, dataFinal);
+            System.out.println("Deseja adicionar indice de sazonalidade?");
+            System.out.println("[0] NÃO");
+            System.out.println("[1] SIM");
+
+            int opt = entrada.nextInt();
+            double valor = 0;
+
+            if (opt == 0) {
+                valor = imovel.valorAluguel(dataInicial, dataFinal);
+            }else if(opt == 1){
+                valor = retornaIndiceSazonalidade(entrada, imovel.valorAluguel(dataInicial, dataFinal));
+            }
 
             System.out.println("Valor do aluguel: R$ " + valor);
         }
