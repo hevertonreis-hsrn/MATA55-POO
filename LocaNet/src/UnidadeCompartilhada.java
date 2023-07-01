@@ -3,9 +3,9 @@ public class UnidadeCompartilhada extends Imovel{
     private String identificacao;
     private Condominio condominio;
 
-    public UnidadeCompartilhada(int numIPTU, String rua, String numero, String cep, String estado, String cidade,
+    public UnidadeCompartilhada(int numIPTU, double valorIPTU, String rua, String numero, String cep, String estado, String cidade,
             String tipo, String utilizacao, String identificacao) {
-        super(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao);
+        super(numIPTU, valorIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao);
         this.identificacao = identificacao;
         this.condominio = new Condominio(rua, numero, cep, estado, cidade);
     }
@@ -30,9 +30,9 @@ public class UnidadeCompartilhada extends Imovel{
     public double valorReferencia() {
         int qtdItensLazer = condominio.qtdItensLazer();
         if (qtdItensLazer > 0) {
-            return super.getNumIPTU() * qtdItensLazer;
+            return super.getValorIPTU() * qtdItensLazer;
         }
 
-        return super.getNumIPTU()*0.1;
+        return super.getValorIPTU()*0.1;
     }
 }

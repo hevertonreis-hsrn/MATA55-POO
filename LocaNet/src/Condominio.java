@@ -19,4 +19,11 @@ public class Condominio{
         return itensLazer.size();
     }
 
+    @Override
+    public String toString() {
+
+        return "============ Dados do Condomínio ===========\n\n" +
+                this.endereco.toString() + "\n";
+    }
+
 }

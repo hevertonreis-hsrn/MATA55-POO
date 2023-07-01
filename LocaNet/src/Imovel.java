@@ -6,21 +6,23 @@ import java.util.List;
 public class Imovel implements IAluguel{
     
     private int numIPTU;
+    private double valorIPTU;
     private Endereco endereco;
     private String tipo;
     private String utilizacao;
     private Agenda agenda;
 
-    public Imovel(int numIPTU,String rua,String numero,String cep,String estado,String cidade,String tipo,String utilizacao){
+    public Imovel(int numIPTU, double valorIPTU, String rua,String numero,String cep,String estado,String cidade,String tipo,String utilizacao){
         this.numIPTU = numIPTU;
+        this.valorIPTU = valorIPTU;
         this.endereco = new Endereco(rua, numero, cidade, estado, cep);
         this.tipo = tipo;  
         this.utilizacao = utilizacao;
         this.agenda = new Agenda();
     }
 
-    public Imovel(int numIPTU,String rua,String numero,String cep,String tipo,String utilizacao){
-        this(numIPTU,rua,numero,cep,Estados.BA.getUF(),"Salvador",tipo,utilizacao);
+    public Imovel(int numIPTU, double valorIPTU, String rua,String numero,String cep,String tipo,String utilizacao){
+        this(numIPTU,valorIPTU,rua,numero,cep,Estados.BA.getUF(),"Salvador",tipo,utilizacao);
     }
 
     public int getNumIPTU() {
@@ -29,6 +31,10 @@ public class Imovel implements IAluguel{
 
     public void setNumIPTU(int numIPTU) {
         this.numIPTU = numIPTU;
+    }
+
+    public double getValorIPTU(){
+        return this.valorIPTU;
     }
 
     public String getTipo() {
@@ -56,6 +62,7 @@ public class Imovel implements IAluguel{
 
         return "============ Dados do Imóvel ===========\n\n" +
                 "IPTU: " + this.getNumIPTU() + "\n" +
+                "Valor IPTU: " + this.getValorIPTU() + "\n" +
                 "Tipo: " + this.getTipo() + "\n" +
                 "Utilização: " + this.getUtilizacao() + "\n\n" +
                 this.endereco.toString() + "\n";

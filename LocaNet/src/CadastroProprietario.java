@@ -21,4 +21,15 @@ public class CadastroProprietario {
         this.cadastro.add(proprietario);
     }
 
+    public Proprietario buscarProprietario(String cpf) {
+        
+        for (Proprietario proprietario : cadastro) {
+            
+            if(proprietario.getCpf() == cpf){
+                return proprietario;
+            }
+        }
+        return null;
+    }
+
 }

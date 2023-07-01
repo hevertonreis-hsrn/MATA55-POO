@@ -12,18 +12,18 @@ public class Aplicacao {
         System.out.println("0. Sair");
         System.out.println("1. Cadastrar Imóvel");
         System.out.println("2. Cadastrar Proprietário");
-        System.out.println("3. Cadastrar Unidade Autônoma");
-        System.out.println("4. Cadastrar Unidade Compartilhada");
-        System.out.println("5. Pesquisar Valor de Referência do Aluguel");
-        System.out.println("6. Pesquisar Valor de Referência do Aluguel com Sazonalidade");
-        System.out.println("7. Adicionar Data Disponível para Aluguel");
-        System.out.println("8. Verificar Disponibilidade para Aluguel");
-        System.out.println("9. Verificar Valor do Aluguel");
+        System.out.println("3. Associar Imóvel à Proprietário");
+        System.out.println("4. Pesquisar Valor de Referência do Aluguel");
+        System.out.println("5. Pesquisar Valor de Referência do Aluguel com Sazonalidade");
+        System.out.println("6. Adicionar Data Disponível para Aluguel");
+        System.out.println("7. Verificar Disponibilidade para Aluguel");
+        System.out.println("8. Verificar Valor do Aluguel");
         System.out.println("Opcao:");
     }
 
     //Variáveis Globais
     static int numIPTU;
+    static double valorIPTU;
     static String rua,numero,cep,cidade;
     static String estado = "BA";
     static String tipo = "casa";
@@ -35,39 +35,13 @@ public class Aplicacao {
 
         System.out.println("Informe o IPTU (Apenas números):");
         numIPTU = entrada.nextInt();
+
+        System.out.println("Informe o valor do IPTU (Ex: 123,45):");
+        valorIPTU = entrada.nextDouble();
+
         entrada.nextLine();
 
-        System.out.println("Informe a Rua:");
-        rua = entrada.nextLine();
-
-        System.out.println("Informe o Número:");
-        numero = entrada.nextLine();
-
-        System.out.println("Informe o CEP:");
-        cep = entrada.nextLine();
-
-        boolean estadoValido = false;
-
-        do {
-            
-            System.out.println("Informe o Estado:");
-            String uf = entrada.nextLine();
-
-            for (Estados estados : Estados.values()) {
-                if(uf.equals(estados.getUF())){
-                    estadoValido = true;
-                    estado = estados.getUF();
-                    break;
-                }
-            }
-
-            if (!estadoValido) {
-                System.out.println("Estado Inválido!\n");
-            }
-        } while (!estadoValido);     
-
-        System.out.println("Informe a Cidade:");
-        cidade = entrada.nextLine();
+        entradaEndereco(entrada);
 
         ArrayList<String> tiposImovel = new ArrayList<>();
         for (TipoImovel tipos : TipoImovel.values()) {
@@ -124,36 +98,7 @@ public class Aplicacao {
         } while (!utilValido);
     }
 
-    public static void cadastrarImovel(Scanner entrada, CadastroImoveis cdImoveis) {
-
-        System.out.println("Você entrou no método de Cadastro de Imóveis.");
-
-        entradaImovel(entrada);
-
-        Imovel m = new Imovel(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao);
-
-        cdImoveis.adicionarImovel(m);
-
-    }
-
-    public static void cadastrarProprietario(Scanner entrada, CadastroProprietario cdProprietario){
-
-        entrada.nextLine();
-        boolean estadoValido = false;
-
-        System.out.println("Você entrou no método de Cadastro de Proprietário.");
-
-        String nome,cpf,identidade,rua,numero,cep,cidade;
-        String estado = "BA";
-
-        System.out.println("Informe o Nome:");
-        nome = entrada.nextLine();
-
-        System.out.println("Informe o CPF:");
-        cpf = entrada.nextLine();
-
-        System.out.println("Informe a Identidade:");
-        identidade = entrada.nextLine();
+    private static void entradaEndereco(Scanner entrada) {
 
         System.out.println("Informe a Rua:");
         rua = entrada.nextLine();
@@ -164,10 +109,14 @@ public class Aplicacao {
         System.out.println("Informe o CEP:");
         cep = entrada.nextLine();
 
+        boolean estadoValido = false;
+
         do {
             
             System.out.println("Informe o Estado:");
             String uf = entrada.nextLine();
+
+            uf = uf.toUpperCase();
 
             for (Estados estados : Estados.values()) {
                 if(uf.equals(estados.getUF())){
@@ -180,15 +129,105 @@ public class Aplicacao {
             if (!estadoValido) {
                 System.out.println("Estado Inválido!\n");
             }
-        } while (!estadoValido); 
+        } while (!estadoValido);     
 
         System.out.println("Informe a Cidade:");
         cidade = entrada.nextLine();
+    }
+
+    public static void cadastrarImovel(Scanner entrada, CadastroImoveis cdImoveis) {
+
+        System.out.println("Você entrou no método de Cadastro de Imóveis.");
+        System.out.println("Que tipo de imóvel deseja cadastrar?");
+        System.out.println("[0] Unidade Autônoma");
+        System.out.println("[1] Unidade Compartilhada");
+
+        int opcao = entrada.nextInt();
+
+        if (opcao == 0) {
+            cadastrarUnidadeAutonoma(entrada, cdImoveis);            
+        } else if(opcao == 1){
+            cadastrarUnidadeCompartilhada(entrada, cdImoveis);
+        } else {
+            System.out.println("Opção Inválida!");
+        }
+
+    }
+
+    public static void associarImovelProprietario(Scanner entrada, CadastroImoveis cdImoveis, CadastroProprietario cdProprietario){
+
+        entrada.nextLine();
+
+        System.out.println("Você entrou no método de Associar Imóvel à Proprietário.");
+
+        System.out.println("Informe o CPF do Proprietário (Ex: 012.345.678-90):");
+        String cpf = entrada.nextLine();
+        
+        Proprietario proprietario = cdProprietario.buscarProprietario(cpf);
+
+        if (proprietario.equals(null)) {
+            System.out.println("Proprietário Não Encontrado.");
+        } else {
+            System.out.println("Informe o IPTU do Imóvel (Apenas números):");
+            numIPTU = entrada.nextInt();
+        
+            Imovel imovel = cdImoveis.buscarImovel(numIPTU);
+
+            if (imovel.equals(null)) {
+                System.out.println("Imóvel não encontrado.");
+                System.out.println("Cadastre o Imóvel e adicione aos registros do Proprietário posteriormente.");
+            }else{
+                proprietario.adicionarImovel(imovel);                
+                System.out.println("Imóvel Associado!");
+            }
+        }
+    }
+
+    public static void cadastrarProprietario(Scanner entrada, CadastroProprietario cdProprietario, CadastroImoveis cdImoveis){
+
+        entrada.nextLine();
+
+        System.out.println("Você entrou no método de Cadastro de Proprietário.");
+
+        String nome,cpf,identidade;
+
+        System.out.println("Informe o Nome:");
+        nome = entrada.nextLine();
+
+        System.out.println("Informe o CPF:");
+        cpf = entrada.nextLine();
+
+        System.out.println("Informe a Identidade:");
+        identidade = entrada.nextLine();
+
+        entradaEndereco(entrada);
 
         Proprietario p = new Proprietario(nome, cpf, identidade, rua, numero, cep, estado, cidade);
 
-        cdProprietario.adicionarProprietario(p);
+        System.out.println("Deseja adicionar um Imóvel?");
+        System.out.println("[0] NÃO");
+        System.out.println("[1] SIM");
 
+        int opcao = entrada.nextInt();
+
+        if (opcao == 0) {
+            System.out.println("Tudo bem, é possível adicionar depois através do menu.");            
+        } else if(opcao == 1){
+            System.out.println("Primeiro vamos verificar se o Imóvel já existe em nossos registros.");
+            System.out.println("Informe o IPTU do Imóvel (Apenas números):");
+            numIPTU = entrada.nextInt();
+        
+            Imovel imovel = cdImoveis.buscarImovel(numIPTU);
+
+            if (imovel.equals(null)) {
+                System.out.println("Imóvel não encontrado.");
+                System.out.println("Cadastre o Imóvel e adicione aos registros do Proprietário posteriormente.");
+            }else{
+                p.adicionarImovel(imovel);
+                System.out.println("Imóvel Adicionado!");
+            }
+        }        
+        cdProprietario.adicionarProprietario(p);
     }
     
     public static void cadastrarUnidadeAutonoma(Scanner entrada, CadastroImoveis cdImoveis) {
@@ -203,7 +242,7 @@ public class Aplicacao {
         System.out.println("Informe a Área Construída (m^2) (Ex: 10,25):");
         double areaConstruida = entrada.nextDouble();
 
-        UnidadeAutonoma ua = new UnidadeAutonoma(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao, areaUtil, areaConstruida);
+        UnidadeAutonoma ua = new UnidadeAutonoma(numIPTU, valorIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao, areaUtil, areaConstruida);
 
         cdImoveis.adicionarImovel(ua);
 
@@ -220,7 +259,7 @@ public class Aplicacao {
         System.out.println("Informe a Identificação:");
         String identificacao = entrada.nextLine();
 
-        UnidadeCompartilhada uc = new UnidadeCompartilhada(numIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao, identificacao);
+        UnidadeCompartilhada uc = new UnidadeCompartilhada(numIPTU, valorIPTU, rua, numero, cep, estado, cidade, tipo, utilizacao, identificacao);
 
         String itemLazer = null;
 
@@ -476,6 +515,7 @@ public class Aplicacao {
             System.out.println("Valor do aluguel: R$ " + valor);
         }
     }
+    
     public static void main(String[] args) {
 
         CadastroImoveis cdImoveis = new CadastroImoveis();
@@ -494,34 +534,30 @@ public class Aplicacao {
                 break;
                 
             case 2:
-                cadastrarProprietario(entrada,cdProprietario);
+                cadastrarProprietario(entrada,cdProprietario,cdImoveis);
                 break;
 
             case 3:
-                cadastrarUnidadeAutonoma(entrada, cdImoveis);
+                associarImovelProprietario(entrada, cdImoveis, cdProprietario);
                 break;
 
             case 4:
-                cadastrarUnidadeCompartilhada(entrada, cdImoveis);
-                break;
-
-            case 5:
                 valorReferenciaAluguel(entrada, cdImoveis);
                 break;
 
-            case 6:
+            case 5:
                 valorReferenciaAluguelComSazonalidade(entrada, cdImoveis);
                 break;
 
-            case 7:
+            case 6:
                 adicionarDataDisponivel(entrada, cdImoveis);
                 break;
 
-            case 8:
+            case 7:
                 verificarDisponibilidade(entrada, cdImoveis);
                 break;
 
-            case 9:
+            case 8:
                 consultarValorAluguel(entrada, cdImoveis);
                 break;
             }

@@ -19,6 +19,7 @@ public class Principal {
         if(estadoValido == true){
             imovel1 = new Imovel(
             123456,
+            123.45,
             "Rua Augusta Brasil",
             "123A",
             "01234-567" , 
@@ -29,6 +30,7 @@ public class Principal {
 
             imovel2 = new Imovel(
             456880,
+            123.45,
             "Rua Felipa Caxias",
             "0001C",
             "55231-773" , 
@@ -55,6 +57,7 @@ public class Principal {
 
             imovel3 = new Imovel(
             123499,
+            123.45,
             "Rua 13 de Maio",
             "0001",
             "01234-775" , 
