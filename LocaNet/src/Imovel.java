@@ -168,7 +168,10 @@ public class Imovel implements IAluguel{
 
             List<LocalDate> datasDisponiveis = this.agenda.getDatasDisponivel();
 
-            for (int i = datasDisponiveis.indexOf(dI); i <= intervalo + 1; i++) {
+            int i = datasDisponiveis.indexOf(dI);
+            int parada = (int) (i + intervalo);
+
+            for (; i < parada; i++) {
                 ComparadorDeDatas comparador = new ComparadorDeDatas();
                 int comparacao = comparador.compare(datasDisponiveis.get(i), dI.plusDays(contador));
                 if (comparacao == 0) {

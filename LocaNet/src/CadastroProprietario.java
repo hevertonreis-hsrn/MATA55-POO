@@ -25,7 +25,7 @@ public class CadastroProprietario {
         
         for (Proprietario proprietario : cadastro) {
             
-            if(proprietario.getCpf() == cpf){
+            if(proprietario.getCpf().equals(cpf)){
                 return proprietario;
             }
         }
