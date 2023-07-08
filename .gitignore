@@ -1,1 +1,4 @@
 /.metadata/
+/LocaNet-PyVersion/.idea
+/LocaNet-PyVersion/__pycache__
+/LocaNet-PyVersion/venv
