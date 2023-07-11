@@ -1,4 +1,3 @@
-#Classe CadastroImóveis
 class CadastroImoveis:
 
   def __init__(self):

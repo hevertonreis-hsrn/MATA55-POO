@@ -1,6 +1,6 @@
-#Enum de Estados
 from enum import Enum
 
+#Enum de Estados
 class Estados(Enum):
   AC = "AC"
   AL = "AL"
@@ -29,3 +29,17 @@ class Estados(Enum):
   SP = "SP"
   SE = "SE"
   TO = "TO"
+
+#Enum de Tipos
+class TipoImovel(Enum):
+
+  CASA= "casa"
+  APTO = "apto"
+  STUDIO = "studio"
+
+#Enum de Utilizações
+class UtilizacaoImovel(Enum):
+
+  CAMPO = "campo"
+  PRAIA = "praia"
+  COMERCIAL = "comercial"

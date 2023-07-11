@@ -1,4 +1,3 @@
-#Classe Proprietário
 from Endereco import Endereco
 
 
