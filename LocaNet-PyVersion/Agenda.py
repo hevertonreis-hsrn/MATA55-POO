@@ -9,6 +9,9 @@ class Agenda:
   def setDataDisponivel(self, data):
     self.datasDisponiveis.append(data)
 
+  def getDatasDisponiveis(self):
+    return self.datasDisponiveis
+
   def compararDatasBloqueado(self, dataComparar):
     for data in self.datasBloqueado:
       if data == dataComparar:

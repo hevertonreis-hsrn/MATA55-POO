@@ -106,7 +106,7 @@ def cadastrarProprietario(cdProprietarios, cdImoveis):
         p = Proprietario(nome, cpf, identidade, rua, numero, cep, estado, cidade)
 
         print('''Deseja adicionar um Imóvel?")
-            [0] NÃO"
+            [0] NÃO
             [1] SIM''')
 
         opcao = int(input("Opção: "))
@@ -125,6 +125,8 @@ def cadastrarProprietario(cdProprietarios, cdImoveis):
             else:
                 p.adicionarImovel(imovel)
                 print("Imóvel Adicionado!")
+        else:
+            print("Opção Inválida! Tente adicionar um Imóvel mais tarde")
 
         cdProprietarios.adicionarProprietario(p)
         print("Proprietário Cadastrado!")
@@ -163,48 +165,85 @@ def adicionarDataDisponivel(cdImoveis):
 
   imovel = cdImoveis.buscarImovel(numIPTU)
 
-  print('''Deseja adicionar 1 (uma) ou mais Datas? Selecione uma opção:")
-    [0] uma Data
-    [1] um intervalo de Datas''')
-
-  opcao = int(input("Opção: "))
-
-  if opcao == 0:
-    print('''Informe um valor para a Data
-      Ex: 15/04/1998''')
-
-    data = str(input("Data: "))
-
-    cadastrado = imovel.adicionarDataDisponivel(data)
-
-    if cadastrado:
-      print("Data cadastrada!")
-  elif opcao == 1:
-    print('''Informe um valor para a Data Inicial
-      Ex: 15/04/1998''')
-
-    data = str(input("Data: "))
-
-    dataInicial = parseStringData(data)
-
-    print('''Informe um valor para a Data Final
-      Ex: 15/04/1998''')
-
-    data = str(input("Data: "))
-
-    dataFinal = parseStringData(data)
-
-    delta = dataFinal - dataInicial
-
-    intervalo = delta.days
-
-    for i in range(intervalo):
-      maisUmDia = timedelta(days = i)
-      data = dataInicial + maisUmDia
-      data = data.strftime("%d/%m/%Y")
-      imovel.adicionarDataDisponivel(data)
+  if imovel == None:
+      print("Imóvel não encontrado.")
+      print()
   else:
-    print("Opção inválida!")
+      print('''Deseja adicionar 1 (uma) ou mais Datas? Selecione uma opção:")
+        [0] uma Data
+        [1] um intervalo de Datas''')
+
+      opcao = int(input("Opção: "))
+
+      if opcao == 0:
+        print('''Informe um valor para a Data
+          Ex: 15/04/1998''')
+
+        data = str(input("Data: "))
+
+        cadastrado = imovel.adicionarDataDisponivel(data)
+
+        if cadastrado:
+          print("Data cadastrada!")
+      elif opcao == 1:
+        print('''Informe um valor para a Data Inicial
+          Ex: 15/04/1998''')
+
+        data = str(input("Data: "))
+
+        dataInicial = parseStringData(data)
+
+        print('''Informe um valor para a Data Final
+          Ex: 15/04/1998''')
+
+        data = str(input("Data: "))
+
+        dataFinal = parseStringData(data)
+
+        delta = dataFinal - dataInicial
+
+        intervalo = delta.days
+
+        intervalo+=1
+
+        for i in range(intervalo):
+          maisUmDia = timedelta(days = i)
+          data = dataInicial + maisUmDia
+          data = data.strftime("%d/%m/%Y")
+          imovel.adicionarDataDisponivel(data)
+      else:
+        print("Opção inválida!")
+
+
+def verificarDisponibilidade(cdImoveis):
+
+    print("Você entrou no método de Verificar Disponibilidade para Aluguel")
+    numIPTU = int(input("Informe o IPTU do Imóvel (Apenas números):"))
+
+    imovel = cdImoveis.buscarImovel(numIPTU)
+
+    if imovel == None:
+        print("Imóvel não encontrado.")
+        print()
+    else:
+        print('''Informe um valor para a Data Inicial
+            Ex: 15/04/1998''')
+
+        dataInicial = str(input("Data: "))
+
+        print('''Informe um valor para a Data Final
+            Ex: 15/04/1998''')
+
+        dataFinal = str(input("Data: "))
+
+        disponivel = imovel.disponibilidadeImovel(dataInicial, dataFinal)
+
+        if disponivel:
+            print("O imóvel se encontra disponível no intervalo.")
+            print()
+        else:
+            print("O imóvel não se encontra disponível no intervalo.")
+            print()
 
 def parseStringData(data):
 
@@ -226,7 +265,6 @@ class Aplicacao:
         3. Associar Imóvel à Proprietário
         4. Adicionar Data Disponível para Aluguel
         5. Verificar Disponibilidade para Aluguel
-        6. Verificar Valor do Aluguel
         Opcao:''')
     opcao = int(input())
     if opcao == 1:
@@ -237,6 +275,14 @@ class Aplicacao:
       associarImovelProprietario(cdImoveis, cdProprietarios)
     elif opcao == 4:
       adicionarDataDisponivel(cdImoveis)
+    elif opcao == 5:
+      verificarDisponibilidade(cdImoveis)
     else:
-      print("Opção Inválida!")
-      print()
+        if opcao != 0:
+          print("Opção Inválida!")
+          print()
+        elif opcao == 0:
+            print("Obrigado e Volte Sempre!")
+            print()
+            print()
+            print("Don't be evil ↜₍^ -༝-^₎")
